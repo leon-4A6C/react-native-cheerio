@@ -12,6 +12,10 @@ $.html()
 //=> <h2 class="title welcome">Hello there!</h2>
 ```
 
+## Note
+
+We are currently working on the 1.0.0 release of cheerio on the `master` branch. The source code for the last published version, `0.22.0`, can be found [here](https://github.com/cheeriojs/cheerio/tree/aa90399c9c02f12432bfff97b8f1c7d8ece7c307).
+
 ## Installation
 `npm install react-native-cheerio`
 
@@ -44,6 +48,7 @@ $.html()
 <details>
   <summary>Forms</summary>
 
+  - [.serialize()](#serialize)
   - [.serializeArray()](#serializearray)
 </details>
 <details>
@@ -198,6 +203,13 @@ $('li[class=orange]').html()
 //=> Orange
 ```
 
+##### XML Namespaces
+You can select with XML Namespaces but [due to the CSS specification](https://www.w3.org/TR/2011/REC-css3-selectors-20110929/#attribute-selectors), the colon (`:`) needs to be escaped for the selector to be valid.
+
+```js
+$('[xml\\:id="main"');
+```
+
 ### Attributes
 Methods for getting and modifying attributes.
 
@@ -323,6 +335,15 @@ $('.apple.green').toggleClass('fruit green red', true).html()
 Checks the current list of elements and returns `true` if _any_ of the elements match the selector. If using an element or Cheerio selection, returns `true` if _any_ of the elements match. If using a predicate function, the function is executed in the context of the selected element, so `this` refers to the current element.
 
 ### Forms
+
+#### .serialize()
+
+Encodes a set of form elements as a URL query string.
+
+```js
+$('<form><input name="foo" value="bar" checked /><input name="foo" value="qux" checked /></form>').serialize()
+//=> foo=bar&foo=qux
+```
 
 #### .serializeArray()
 
@@ -856,7 +877,7 @@ $('li').wrap(healthy)
 //   </ul>
 ```
 
-#### .css( [propertName] ) <br /> .css( [ propertyNames] ) <br /> .css( [propertyName], [value] ) <br /> .css( [propertName], [function] ) <br /> .css( [properties] )
+#### .css( [propertyName] ) <br /> .css( [ propertyNames] ) <br /> .css( [propertyName], [value] ) <br /> .css( [propertyName], [function] ) <br /> .css( [properties] )
 
 Get the value of a style property for the first element in the set of matched elements or set one or more CSS properties for every matched element.
 
@@ -941,7 +962,7 @@ $.root().append('<ul id="vegetables"></ul>').html();
 Checks to see if the `contained` DOM element is a descendant of the `container` DOM element.
 
 #### $.parseHTML( data [, context ] [, keepScripts ] )
-Parses a string into an array of DOM nodes. The `context` argument has no meaning for Cheerio, but it is maintained for API compatability.
+Parses a string into an array of DOM nodes. The `context` argument has no meaning for Cheerio, but it is maintained for API compatibility.
 
 #### $.load( html[, options ] )
 Load in the HTML. (See the previous section titled "Loading" for more information.)
@@ -961,7 +982,7 @@ $('body').logHtml(); // logs "Hello, <b>world</b>!" to the console
 
 ### The "DOM Node" object
 
-Cheerio collections are made up of objects that bear some resemblence to [browser-based DOM nodes](https://developer.mozilla.org/en-US/docs/Web/API/Node). You can expect them to define the following properties:
+Cheerio collections are made up of objects that bear some resemblance to [browser-based DOM nodes](https://developer.mozilla.org/en-US/docs/Web/API/Node). You can expect them to define the following properties:
 
 - `tagName`
 - `parentNode`
